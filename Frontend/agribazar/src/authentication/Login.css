@@ -1,0 +1,106 @@
+body{
+background-image: url('../assets/background.png');
+background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.input-group input{
+  color: white;
+  background-color:white;
+}
+.error-msg {
+  color: red;
+  font-size: 16px;
+  margin-top: 5px;
+}
+.login-form {
+  background-color:rgb(55, 124, 55);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 30px;
+  color:white;
+  font-size: 2.5rem;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color:white;
+  font-weight: 600;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; 
+}
+.lastname{
+    color: white;
+    font-size: 17px;
+}
+a{
+    font-size: 17px;
+    
+}
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color:white;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  font-size: 18px;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.login-footer p {
+  margin: 10px 0;
+  
+}
+
+.givelink {
+  color: blue;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.givelink:hover {
+  text-decoration: underline;
+  
+
+}
