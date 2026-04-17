@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import agribazarlogo from "../assets/agri.png";
-
+import { useEffect,useState } from "react";
+import API from "../services/API";
 import {
   FaSearch,
   FaTruck,
@@ -13,9 +14,31 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 import { IoLanguage } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";const Navbar = () => {
+import { useNavigate } from "react-router-dom";
+const Navbar = () => {
 const{t}=useTranslation();
 const navigate=useNavigate();
+const [showProfile, setShowProfile] = useState(false);
+const [user, setUser] = useState(null);
+
+useEffect(() => {
+    API.get("/auth/me")
+      .then(res => setUser(res.data))
+      .catch(err => console.log(err));
+
+}, []);
+console.log(user);
+useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (!e.target.closest(".profile-dropdown") && 
+    !e.target.closest(".login-section")) {
+  setShowProfile(false);
+}
+  };
+
+  document.addEventListener("click", handleClickOutside);
+  return () => document.removeEventListener("click", handleClickOutside);
+}, []);
 
   return (
       <div className="navbar-1 d-flex w-100 justify-content-between align-items-center">
@@ -57,9 +80,39 @@ const navigate=useNavigate();
 
           <div className="nav-item">
             <FaUser />
-            <span>{t("login")}</span>
-          </div>
+<div className="login-section">
+  <span onClick={() => setShowProfile(!showProfile)}>
+    {user?user.name :"user"}
+  </span>
+</div>
+   </div>
+{showProfile && user && (
+  <div className="profile-dropdown">
+    
+    <div className="profile-header">
+      <div className="user-icon">👤</div>
+      <h3>{user.name}</h3>
+      <p>{user.email}</p>
+      <p>{user.villageName}</p>
+    </div>
 
+    <div className="profile-options">
+      <button onClick={() => navigate("/orders")}>
+        Previous Orders
+      </button>
+
+      <button
+        className="logout-btn"
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        Logout
+      </button>
+    </div>
+
+  </div>
+)}
           <div className="nav-item" onClick={()=>navigate("/cart")}>
             <FaShoppingCart />
             <span>{t("cart")}</span>

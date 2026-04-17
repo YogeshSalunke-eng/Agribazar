@@ -8,8 +8,7 @@ import seedsImg  from "../assets/seeds.png"
 import herbicidesImg from "../assets/herbicides.png"
 import fertilizersImg from "../assets/fertilizers.png" 
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-const Categories = () => {
+const Categories = ({setCategory}) => {
   const {t}=useTranslation();
   const categoryData = [
     { name: "nutrients", img: nutrientsImg },
@@ -20,10 +19,9 @@ const Categories = () => {
     { name: "fertilizers", img: fertilizersImg},
   ];
   const [activeCategory, setActiveCategory] = useState(null);
-const navigate= useNavigate();
 const handlecategory = (categoryName) => {
   setActiveCategory(categoryName);
-  navigate("/pages", { state: { selectedCategory: categoryName } });
+  setCategory(categoryName);
 };
 
   return (

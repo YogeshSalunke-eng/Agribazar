@@ -16,10 +16,10 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 
 		ErrorResponse error = ErrorResponse.builder().timestamp(LocalDateTime.now())
-				.status(HttpStatus.BAD_REQUEST.value()).error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+				.status(HttpStatus.CONFLICT.value()).error(HttpStatus.CONFLICT.getReasonPhrase())
 				.message(ex.getMessage()).path(request.getRequestURI()).build();
 
-		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -27,10 +27,10 @@ public class GlobalExceptionHandler {
 			HttpServletRequest request) {
 
 		ErrorResponse error = ErrorResponse.builder().timestamp(LocalDateTime.now())
-				.status(HttpStatus.BAD_REQUEST.value()).error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+				.status(HttpStatus.CONFLICT.value()).error(HttpStatus.CONFLICT.getReasonPhrase())
 				.message(ex.getMessage()).path(request.getRequestURI()).build();
 
-		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(Exception.class)

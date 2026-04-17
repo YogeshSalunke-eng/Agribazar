@@ -17,7 +17,16 @@ email,
 password
 
  } );
-navigate("/dashboard");
+ const role=response.data.role;
+ if(role==="ROLE_USER"){
+navigate("/userDashboard");
+ }
+ else if(role==="ROLE_SELLER"){
+  navigate("/sellerDashboard");
+ }
+ else{
+  navigate("/login");
+ }
 }
 catch(err){
 if(err.response && err.response.data){
@@ -37,7 +46,7 @@ else{
         <h1>Login</h1>
         
         <div className="input-group">
-          <label>Email</label>
+          <label style= {{color:"#2e7d32"}}> Email</label>
           <input 
             type="email" 
             placeholder="Enter your email" 
@@ -48,7 +57,7 @@ else{
         </div>
 
         <div className="input-group">
-          <label>Password</label>
+          <label style={{color:"#2e7d32"}}>Password</label>
           <input 
             type="password" 
             placeholder="Enter your password" 

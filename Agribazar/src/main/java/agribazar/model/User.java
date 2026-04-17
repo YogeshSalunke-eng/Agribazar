@@ -15,5 +15,5 @@ public class User {
 	private String name;
 	@jakarta.persistence.Enumerated(jakarta.persistence.EnumType.STRING)
 	private Role role;
-
+private String villageName;
 }

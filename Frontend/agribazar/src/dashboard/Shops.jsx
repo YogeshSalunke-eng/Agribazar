@@ -7,8 +7,9 @@ import shopImg3 from "../assets/balaji.png";
 import shopImg4 from "../assets/natha.png";
 import shopImg5 from "../assets/jadhav.png";
 import shopImg6 from "../assets/ujjwal.png";
+import { useNavigate } from 'react-router-dom';
 
-const Shops = ({setSelectedShop}) => {
+const Shops = ({setShopId}) => {
   const {t}=useTranslation();
 const shopsData = [
     {shopId:1, name: "shreeDhokeshwar", img: shopImg1 },
@@ -18,7 +19,7 @@ const shopsData = [
     {shopId:5, name: "jadhav", img:shopImg5  },
     {shopId:6, name: "ujjwal", img: shopImg6},
   ];
-
+ const navigate=useNavigate();
   return (
 <div className="shops-wrapper">
 <div className="shop-info">
@@ -29,7 +30,14 @@ const shopsData = [
       <div className="shops-container">
         {shopsData.map((item) => (
           <div className="shops-card" key={item.shopId}
-          onClick={()=>setSelectedShop(item.shopId)}
+          onClick={() => {
+  setShopId(item.shopId);
+  navigate("/productdashboard", {
+    state: {
+      shopId: item.shopId
+    }
+  });
+}}
           >
             <div className="shops-image-box">
               <img src={item.img} alt={t(item.name)} />

@@ -31,10 +31,10 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth -> auth.requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**")
-				.permitAll().requestMatchers("/auth/**").permitAll().requestMatchers("/otp/**").permitAll()
-
-				.anyRequest().permitAll())
+		http.authorizeHttpRequests(auth -> auth.requestMatchers
+				(org.springframework.http.HttpMethod.OPTIONS, "/**")
+				.permitAll()
+				.requestMatchers("/**").permitAll())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
 				.addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class);

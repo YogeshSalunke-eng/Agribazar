@@ -34,7 +34,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Column 3 */}
         <div className="footer-col">
           <h3>Top Categories</h3>
           <ul>

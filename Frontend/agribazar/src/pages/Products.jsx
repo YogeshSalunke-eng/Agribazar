@@ -5,7 +5,7 @@ import API from "../services/API";
 import { FaShoppingCart } from "react-icons/fa";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function Products({ selectedshop,selectedCategory, crop, brand, pricing }) {
+function Products({ selectedshop,category, crop, brand, pricing }) {
   const { t } = useTranslation();
 
   const [products, setproducts] = useState([]);
@@ -21,45 +21,54 @@ const navigate=useNavigate();
   };
 
   useEffect(() => {
-    if(selectedshop){
+    if(category || selectedshop){
           fetchproducts();
 
     }
-  }, [selectedshop]);
-
+  }, [category,selectedshop
+  ]);
+const formattedCategory = category?.toUpperCase();
   const fetchproducts = async () => {
-    try {
-      const response = await API.get(`/shops/${selectedshop}/products`);
-      const shuffled = shuffleArray(response.data);
-      setproducts(shuffled);
-    } catch (error) {
-      console.log("error in fetching product", error);
-    }
-  };
+  try {
+    let response;
+    if (selectedshop && category && category !== "all") {
+  response = await API.get(
+    `/api/shops/${selectedshop}/category/${formattedCategory}/products`
+  );
+} else if (selectedshop) {
+  response = await API.get(`/api/shops/${selectedshop}/products`);
+} 
+    const shuffled = shuffleArray(response.data);
+    setproducts(shuffled);
+
+  } catch (error) {
+    console.log("error in fetching product", error);
+  }
+};
 
   useEffect(() => {
     applyFilters();
-  }, [products, crop,brand,selectedCategory, pricing]);
+  }, [products, crop,brand,category, pricing]);
 
   const applyFilters = () => {
     let filtered = [...products];
-    if (selectedCategory && selectedCategory !== "all") {
-    filtered = filtered.filter(p =>
-      p.category?.toLowerCase() === selectedCategory.toLowerCase()
-    );
-  }
+//     if (category && category !== "all") {
+//   filtered = filtered.filter(p =>
+//     p.product?.category?.toLowerCase() === category.toLowerCase()
+//   );
+// }
 
-    if (crop !== "all") {
-      filtered = filtered.filter(p =>
-        p.cropname.toLowerCase().includes(crop.toLowerCase())
-      );
-    }
+if (crop !== "all") {
+  filtered = filtered.filter(p =>
+    p.product?.cropname?.toLowerCase().includes(crop.toLowerCase())
+  );
+}
 
-    if (brand !== "all") {
-      filtered = filtered.filter(p =>
-        p.name.toLowerCase().includes(brand.toLowerCase())
-      );
-    }
+if (brand !== "all") {
+  filtered = filtered.filter(p =>
+    p.product?.name?.toLowerCase().includes(brand.toLowerCase())
+  );
+}
 
     if (pricing !== "all") {
       filtered = filtered.filter(p => {
@@ -84,35 +93,39 @@ const navigate=useNavigate();
 
     setFilteredProducts(filtered);
   };
-console.log("Selected Category:", selectedCategory);
-console.log("Product Category:", products[0]?.category);
 
 
 return (
     <div className="shops-container">
       <div className="products-grid">
-      {filteredProducts.map((product) => (
-        <div key={product.productId} className="product-card">
-          <img
-            src={`http://localhost:8080/uploads/${product.imageUrl}`}
-            alt={product.name}
-            className="product-image"
-          />
+  {filteredProducts.length === 0 ? (
+    <h1 className="no-products">Products Not Found</h1>
+  ) : (
+    filteredProducts.map((product) => (
+      <div key={product.product?.id} className="product-card">
+        <img
+          src={`http://localhost:8080/uploads/${product.product?.imageUrl}`}
+          alt={product.product?.name}
+          className="product-image"
+        />
+        <h3>{product.product?.name}</h3>
+        <p className="price">₹{product.price}</p>
+        <p className="category">{product.product?.cropname}</p>
 
-          <h3>{product.name}</h3>
-          <p className="price">₹{product.price}</p>
-          <p className="category">{product.cropname}</p>
-
-          <div className="buttons">
-            <button className="view-btn" onClick={()=>navigate("/productdetails")}>View</button>
-            <button className="addcart-btn" onClick={()=>navigate("/addcart")}>
-              add to cart <FaShoppingCart />
-            </button>
-          </div>
+        <div className="buttons">
+          <button onClick={() =>
+  navigate("/productdetails", { state: { product } })}>
+            View
+          </button>
+          <button onClick={() => navigate("/addcart")}>
+            add to cart <FaShoppingCart />
+          </button>
         </div>
-      ))}
       </div>
-    </div>
+    ))
+  )}
+</div>
+      </div>
   );
 }
 

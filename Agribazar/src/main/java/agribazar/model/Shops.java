@@ -10,9 +10,8 @@ import java.util.List;
 public class Shops {
 	@jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
 	@jakarta.persistence.Id
-	private int id;
+	private Long id;
 	private String name;
 	private String ownername;
-	@jakarta.persistence.OneToMany(mappedBy = "shop")
-	private List<Product> products;
+	
 }

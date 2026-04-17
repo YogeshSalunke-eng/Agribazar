@@ -12,11 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductDTO {
 
-	private Long id;
 	private String name;
-	private Long price;
+	private String price;
 	private String imageUrl;
 	private String description;
 	private Category category;
-	private String shopName;
+	private String cropname;
 }

@@ -22,7 +22,8 @@ public class JwtService {
 
 		claims.put("role", userDetails.getAuthorities().iterator().next().getAuthority());
 
-		return Jwts.builder().claims(claims).subject(userDetails.getUsername())
+		return Jwts.builder().claims(claims)
+				.subject(userDetails.getUsername())
 				.issuedAt(new Date(System.currentTimeMillis()))
 				.expiration(new Date(System.currentTimeMillis() + expirationMs)).signWith(getkey()).compact();
 	}

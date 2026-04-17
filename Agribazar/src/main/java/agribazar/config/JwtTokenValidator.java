@@ -47,7 +47,8 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 			if (jwtService.validateToken(token, userDetails)) {
 				String role = jwtService.extractRole(token);
 
-				org.springframework.security.core.authority.SimpleGrantedAuthority authority = new org.springframework.security.core.authority.SimpleGrantedAuthority(
+				org.springframework.security.core.authority.SimpleGrantedAuthority authority = 
+						new org.springframework.security.core.authority.SimpleGrantedAuthority(
 						role);
 
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
@@ -58,6 +59,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
 		}
 		filterChain.doFilter(request, response);
-
+		System.out.println("TOKEN: " + token);
+		System.out.println("EXTRACTED USERNAME: " + username);
 	}
 }

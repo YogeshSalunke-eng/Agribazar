@@ -4,7 +4,7 @@ const Filters = ({
   brand,
   pricing,
   onCropChange,
-  onbBrandChange,
+  onBrandChange,
   onPriceChange,
 }) => {
   return (
@@ -41,7 +41,7 @@ const Filters = ({
               name="brands"
               value={t}
               checked={brand === t}
-              onChange={() => onbBrandChange(t)}
+              onChange={() => onBrandChange(t)}
             />
             {t}
           </label>

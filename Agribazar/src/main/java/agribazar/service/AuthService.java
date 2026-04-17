@@ -1,11 +1,12 @@
 package agribazar.service;
 
+import agribazar.dtos.LoginResponse;
 import agribazar.dtos.UserDto;
 import agribazar.model.User;
 
 public interface AuthService {
 
-	public String verify(UserDto user);
+	public LoginResponse verify(UserDto user);
 
 	User register(UserDto dto);
 

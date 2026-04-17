@@ -1,78 +1,73 @@
-
-
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
-.input-group input{
-  color:black;
-  background-color:white;
-}
 .register-form {
-    background-color:rgb(55, 124, 55);
+  background: #ffffff;
+  padding: 30px 35px;
+  width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.4s ease-in-out;
+}
 
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
+.register-form h1 {
   text-align: center;
-}
-
-h1 {
-  margin-bottom: 30px;
-  color:white;
-  font-size: 2.5rem;
-}
-
-.input-group {
-  text-align: left;
+  color: #2e7d32;
   margin-bottom: 20px;
 }
 
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
 .input-group label {
-  display: block;
-  margin-bottom: 8px;
-  color:white;
   font-weight: 600;
+  margin-bottom: 5px;
+  color: #2e7d32;
 }
 
 .input-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box; 
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.3s;
 }
 
-a{
-    font-size: 17px;
-    
+.input-group input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
 }
+
 .email-row {
   display: flex;
   gap: 10px;
-  color: black;
-}
-.email{
-  color: black;
 }
 
 .otp-btn {
-  padding: 8px 12px;
+  padding: 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-    border-radius: 10px;
-
+  min-width: 100px;
+  transition: 0.3s;
 }
 
-.success-msg {
-  color:black;
-  font-size: 14px;
-  margin-bottom: 10px;
+.otp-btn:hover {
+  background: #388e3c;
+}
+
+.otp-btn:disabled {
+  background: #a5d6a7;
+  cursor: not-allowed;
 }
 
 .otp-timer-row {
@@ -83,55 +78,82 @@ a{
 }
 
 .resend-btn {
-  background-color: #f0f0f0;
+  background: transparent;
+  border: none;
+  color: #2e7d32;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 10px;
 }
 
 .resend-btn:disabled {
-  opacity: 0.5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.next-btn {
+  width: 100%;
+  padding: 12px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.next-btn:hover {
+  background: #1b5e20;
+}
+
+.next-btn:disabled {
+  background: #a5d6a7;
   cursor: not-allowed;
 }
 
 .error-msg {
-  color: red;
-  font-size: 16px;
-  margin-top: 5px;
-}
-.register-btn {
-  width: 100%;
-  padding: 12px;
-  background-color:white;
-  color: black;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-size: 20px;
-  transition: background 0.3s ease;
+  color: #d32f2f;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.register-btn:hover {
-  font-size: 18px;
+.success-msg {
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .register-footer {
-  margin-top: 20px;
-  font-size: 0.9rem;
+  margin-top: 15px;
+  text-align: center;
 }
 
-.register-footer p {
-  margin: 10px 0;
-  color: #777;
+.register-link {
+  font-size: 14px;
+}
+
+.lastname {
+  color: #555;
 }
 
 .givelink {
-  color: #007bff;
-  text-decoration: none;
+  color: #2e7d32;
   font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
 }
 
-.givelink {
+.givelink:hover {
   text-decoration: underline;
-  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

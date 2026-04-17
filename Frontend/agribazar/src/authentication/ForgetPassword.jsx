@@ -1,5 +1,6 @@
+import API from '../services/API';
 import React, { useState, useEffect } from 'react';
-import './ForgetPassword.css';
+import './Register.css';
 import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
@@ -10,45 +11,127 @@ const ForgetPassword = () => {
   const [showOtpField, setShowOtpField] = useState(false);
   const [message, setMessage] = useState('');
   const [timer, setTimer] = useState(0);
-const [error, setError] = useState('');
+  const [error, setError] = useState('');
+  const[isVerified, setIsVerified]=useState(false);
+  const[loading,setLoading]=useState(false);
   const navigate = useNavigate();
 
-const handleSubmit = (e) => {
+const handleSubmit = async(e) => {
   e.preventDefault();
+   if (!isVerified) {
+    setError("Please verify the otp first");
+    return;
+  }
+
+  try {
+    const response = await API.post("/auth/forgot-password", {
+      email:email.trim(),
+      password,
+      
+    });
+if(response.status===200){
+setMessage("password change successfully, please login");
+ navigate("/login");
+}
+    else{
+      setError("registration fail");
+    }
+  } catch (err) {
+    
+  if (err.response && err.response.data) {
+    setError(err.response.data);
+  } else {
+    setError("Something went wrong");
+  }
+}
 };
-
   useEffect(() => {
-    let interval = null;
+    if(timer<=0){
+      return;
+    }
 
-    if (timer > 0) {
-      interval = setInterval(() => {
+      const interval = setInterval(() => {
         setTimer(prev => prev - 1);
       }, 1000);
-    }
+    
 
     return () => clearInterval(interval);
   }, [timer]);
 
-  const handleSendOtp = () => {
+  const handleSendOtp = async() => {
     if (!email) {
   setError("Please enter your email first!!!");
       return;
     }
-setError('');
-    setMessage("Email sent successfully ✅");
+    try{
+      setLoading(true);
+      const response=await API.post("email/send-otp",{
+        email
+      });
+      if(response.status===200){
+setMessage("otp sent successfully ✅");
+setLoading(false);
     setShowOtpField(true);
     setTimer(60); 
+      }
+    }
+    catch(e){
+if (err.response && err.response.data) {
+    setError(err.response.data);}
+  else{
+    setError("error in sending otp");
+  }}
   };
 
-  const handleResendOtp = () => {
-    setMessage("OTP resent successfully ✅");
-    setTimer(60);
+  const handleResendOtp = async() => {
+    if (!email) {
+  setError("Please enter your email first!!!");
+      return;
+    }
+    try{
+      setLoading(true);
+      const response=await API.post("email/send-otp",{
+        email
+      });
+      if(response.ok){
+setMessage("otp sent successfully ✅");
+setLoading(false);
+    setShowOtpField(true);
+    setTimer(60); 
+      }
+    }
+    catch(e){
+if (err.response && err.response.data) {
+    setError(err.response.data);}    }
   };
-
+const handleOtpChange=async(value)=>{
+  if(value.length==6){
+    console.log("otp is ",value);
+    console.log("email is",email);
+    try{
+      const response=await API.post("/email/verify-otp",{
+        email:email.trim(),
+        otp:value
+      }
+      );
+      if(response.status===200){
+        setIsVerified(true);
+        setMessage("otp verified ✅");
+      }
+      else {setMessage("Invalid otp ❌");}
+    }
+    catch(err){
+if (err.response && err.response.data) {
+    setError(err.response.data);}   
+  else{
+    setError("error in verifying otp")
+  } }
+  }
+}
   return (
-    <div className="forget-container">
-      <form className="forget-form" onSubmit={handleSubmit}>
-        <h1>Reset the Password</h1>
+    <div className="register-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h1>change password</h1>
 
         <div className="input-group email-group">
           <label>Email</label>
@@ -64,12 +147,14 @@ setError('');
               type="button"
               className="otp-btn"
               onClick={handleSendOtp}
+              disabled={showOtpField || loading}
             >
-              OTP
+            {loading?"sending":"send otp"}
             </button>
           </div>
         </div>
 {error && <p className='error-msg'>{error}</p>}
+ {message && <p className="success-msg">{message}</p>}
 
         {showOtpField && (
           <>
@@ -79,18 +164,21 @@ setError('');
                 type="text"
                 placeholder="Enter OTP"
                 value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                onChange={(e) => {
+                  setOtp(e.target.value);
+                  handleOtpChange(e.target.value);}}
               />
             </div>
 
             <div className="otp-timer-row">
-              <span>Time left: {timer}s</span>
+              <span>⏳{timer}s</span>
 
               <button
                 type="button"
                 className="resend-btn"
                 disabled={timer > 0}
                 onClick={handleResendOtp}
+
               >
                 Resend OTP
               </button>
@@ -102,24 +190,32 @@ setError('');
           <label>Password</label>
           <input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter new password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
 
-        <button type="submit" className="forget-btn">Save</button>
+        <button type="button" className="next-btn"
+                 disabled={!password || !isVerified}
 
-        <div className="forget-footer">
-          <div className="forget-link">
-            <span className='lastname'>Already have account </span>
-           <p className='givelink' onClick={()=>navigate("/login")}>login</p>
-          </div>
+         >save
+         </button>
+
+        <div className="register-footer">
+          <div className="register-link">
+  <span className='lastname'>Already have account </span>
+  <span 
+    className='givelink'
+    onClick={() => navigate("/login")}
+  >
+    login
+  </span>
+</div>
         </div>
       </form>
     </div>
   );
 };
-
 export default ForgetPassword;

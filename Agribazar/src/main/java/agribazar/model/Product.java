@@ -13,15 +13,13 @@ import jakarta.persistence.Id;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private Long price;
+	private String price;
 	private String imageUrl;
 	private String description;
+	private String cropname;
 	@jakarta.persistence.Enumerated(jakarta.persistence.EnumType.STRING)
 	private Category category;
-	@jakarta.persistence.ManyToOne
-	@jakarta.persistence.JoinColumn(name = "shop_id")
-	private Shops shop;
+	
 }

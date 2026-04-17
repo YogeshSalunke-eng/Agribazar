@@ -12,4 +12,6 @@ public interface ProductService {
 	public List<ProductDTO> getProductsByCategory(Category category);
 
 	public ProductDTO createProduct(ProductDTO productDTO);
+
+	List<ProductDTO> getProductsByCategory(Category category, int page, int size);
 }

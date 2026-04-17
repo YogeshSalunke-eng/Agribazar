@@ -2,13 +2,12 @@ import { useState } from "react";
 import Filters from './Filters';
 import Products from './Products';
 import { useLocation } from "react-router-dom";
-const Pages = ({ selectedshop }) => {
+const Pages = ({ selectedshop,category}) => {
   const [crop, setCrop] = useState("all");
   const [brand, setBrand] = useState("all");
   const [pricing, setPricing] = useState("all");
-  const location=useLocation();
-  const selectedCategory=location.state?.selectedCategory;
-  console.log("selected category is",selectedCategory);
+
+  console.log("selected category is",category);
   return (
   
     <div className="pages-container">
@@ -25,7 +24,7 @@ const Pages = ({ selectedshop }) => {
 
       <div className="content">
         <Products
-        selectedCategory={selectedCategory}
+        category={category}
           selectedshop={selectedshop}
           crop={crop}
           brand={brand}
