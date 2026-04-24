@@ -221,12 +221,16 @@ VITE_API_URL=http://<EC2_PUBLIC_IP>:8080
 ## 📸 Screenshots
 
 ### 🔐 Register Page
-![Register Page](screenshots/register.png)
+
+<p align="center">
+  <img src="src/screenshots/Register.png" width="45%" />
+  <img src="src/screenshots/untitled.png" width="45%" />
+</p>
 
 ---
 
 ### 🔐 Login Page
-![Login Page](screenshots/login.png)
+![Login Page](screenshots/Login.png)
 
 ---
 
