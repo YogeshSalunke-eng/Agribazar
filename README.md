@@ -220,44 +220,58 @@ VITE_API_URL=http://<EC2_PUBLIC_IP>:8080
 
 ## 📸 Screenshots
 
-### 🔐 Register Page
+---
 
-<p align="center">
-  <img src="src/screenshots/Register.png" width="45%" />
-  <img src="src/screenshots/untitled.png" width="45%" />
-</p>
+## 🔐 Authentication
+
+### 📝 Register Page
+![Register Page](screenshots/Register.png)
 
 ---
 
-### 🔐 Login Page
+### 📋 Additional User Information
+![Additional Info](screenshots/Untitled.png)
+
+---
+
+### 🔑 Login Page
 ![Login Page](screenshots/Login.png)
 
 ---
 
-### 📊 Dashboard
-![Dashboard](screenshots/dashboard.png)
+## 🛒 User Experience
+
+### 🏠 User Dashboard
+![User Dashboard](screenshots/UserDashboard.png)
 
 ---
 
-### 📁 Create Project
-![Create Project](screenshots/newproject.png)
+### 🛍️ Product Browsing
+![Product Listing](screenshots/UserDashboard-1.png)
+
+---
+### 📊 Product with shops
+![shop products](screenshots/ProductDahshboard.png)
 
 ---
 
-### 📂 Project Details
-![Project Details](screenshots/projectdetails.png)
+### 📦 Product Details
+![Product Details](screenshots/ProductDetails.png)
 
 ---
 
-### 🐞 Issue Details
-![Issue Details](screenshots/issuedetails.png)
+### 🧺 Cart
+![Cart](screenshots/Cart.png)
 
 ---
 
-### 💳 Payment Page
-![Payment Page](screenshots/payment.png)
+### ❤️ Wishlist
+![Wishlist](screenshots/WishList.png)
 
 ---
+
+
+
 
 
 ## 🧠 Key Learnings
