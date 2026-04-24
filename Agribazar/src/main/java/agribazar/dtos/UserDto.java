@@ -1,4 +1,5 @@
 package agribazar.dtos;
+import agribazar.model.Cart;
 import agribazar.model.Role;
 @lombok.Data
 public class UserDto {
@@ -7,4 +8,5 @@ public class UserDto {
 	private String name;
 	private Role role;
 	private String villageName;
+	private Cart cart;
 }

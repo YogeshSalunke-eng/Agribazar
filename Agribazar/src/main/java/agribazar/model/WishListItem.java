@@ -20,11 +20,9 @@ public class WishListItem {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "wishlist_id")
     private WishList wishlist;
-
     @ManyToOne   
     @JoinColumn(name = "shop_product_id")
     private ShopProducts shopProduct;

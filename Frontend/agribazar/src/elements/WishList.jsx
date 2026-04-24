@@ -1,61 +1,98 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Element.css";
-import seedsImg from "../assets/seeds.png";
-import { FaHeart, FaShoppingCart, FaTrash } from "react-icons/fa";
+import { FaTrash, FaShoppingCart } from "react-icons/fa";
+import API from "../services/API";
+import { FaHeart } from "react-icons/fa"; 
 
 const WishList = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Ujjwal Fungicide",
-      category: "Fungicides",
-      price: 499,
-      description:
-        "High quality fungicide for crop protection and better yield.",
-      image: seedsImg,
-    },
-  ];
+  const [wishListItems, setWishListItems] = useState([]);
+
+  useEffect(() => {
+    const fetchWishList = async () => {
+      try {
+        const res = await API.get("/api/wishlist/get");
+
+        const items = res.data.items || [];
+        const formattedItems = items.map((item) => ({
+          id: item.id,
+          name: item.productName,
+          price: item.price, 
+          image: `https://agribazar-uploads.s3.ap-south-1.amazonaws.com/${item.imageUrl}`, 
+          category: "Product", 
+          shopname:item.shopName,
+          wishlistId:item.wishListId,
+          shopProductId:item.shopProductId
+        }));
+
+        setWishListItems(formattedItems);
+
+      } catch (err) {
+        console.log(err);
+        setWishListItems([]);
+      }
+    };
+
+    fetchWishList();
+  }, []);
+
+  
+const removeItem = async (item) => {
+  try {
+    await API.delete("/api/wishlist/remove", {
+      params: {
+        wishlistId: item.wishlistId,
+        shopProductId: item.shopProductId
+      },
+    });
+
+    setWishListItems((prev) =>
+      prev.filter((i) => i.id !== item.id)
+    );
+
+    console.log("Item removed successfully");
+  } catch (error) {
+    console.log("Error removing item:", error);
+  }
+};
 
   return (
-    <div className="wishlist-page">
-      <h2 className="wishlist-title">My Wishlist ❤️</h2>
+    <div className="cart-page">
+      <h2 className="cart-title">
+         My wishlist <FaHeart/>
+      </h2>
 
-      {products.length === 0 ? (
-        <div className="empty-wishlist">
-          <h3>Your wishlist is empty</h3>
-          <p>Add products you love and they’ll appear here.</p>
+      {wishListItems.length === 0 ? (
+        <div className="empty-cart">
+          <h3>Your wishlist is empty 🛒</h3>
+          <p>Add products to see them here.</p>
         </div>
       ) : (
-        <div className="wishlist-container">
-          {products.map((item) => (
-            <div className="wishlist-card" key={item.id}>
-              <img src={item.image} alt={item.name} />
+        <>
+          <div className="cart-container">
+            {wishListItems.map((item) => (
+              <div className="cart-card" key={item.id}>
+                <img src={item.image} alt={item.name} />
 
-              <div className="wishlist-info">
-                <h3>{item.name}</h3>
-                <p className="category">{item.category}</p>
-                <p className="description">{item.description}</p>
-                <p className="price">₹{item.price}</p>
+                <div className="cart-info">
+                  <div className="shopandname">
+                  <h3>{item.name}</h3>
+                  <p>from {item.shopname}</p>
+                  </div>
+                  <p className="category">{item.category}</p>
+                  <p className="price">₹{item.price}</p>
 
-                <div className="wishlist-buttons">
-                  <button className="add-cart-btn">
-                    <FaShoppingCart /> Add to Cart
-                  </button>
-
-                  <button className="remove-btn">
-                    <FaTrash /> Remove
-                  </button>
+                  <button
+  className="remove-btn"
+  onClick={() => removeItem(item)}
+>
+  <FaTrash /> Remove
+</button>
                 </div>
               </div>
-
-              <div className="wishlist-heart">
-                <FaHeart />
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
-     
     </div>
   );
 };

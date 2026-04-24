@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: yogeshdev123098/agribazar-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    image: yogeshdev123098/agribazar-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/agribazar
+      - SPRING_DATASOURCE_USERNAME=agribazar
+      - SPRING_DATASOURCE_PASSWORD=agribazar
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: agribazar
+      MYSQL_ROOT_PASSWORD: agribazar
+    ports:
+      - "3306:3306"

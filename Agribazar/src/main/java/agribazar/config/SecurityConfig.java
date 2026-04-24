@@ -1,5 +1,5 @@
 package agribazar.config;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -13,11 +13,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 @org.springframework.context.annotation.Configuration
 @org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 public class SecurityConfig {
 
+	
 	private final JwtTokenValidator jwtTokenValidator;
 
 	SecurityConfig(JwtTokenValidator jwtTokenValidator) {
@@ -47,16 +47,17 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(java.util.List.of("http://localhost:5173"));
-		config.setAllowedMethods(java.util.List.of("*"));
-		config.setAllowedHeaders(java.util.List.of("*"));
-		config.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", config);
-		return source;
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
 
-	}
+    config.setAllowedOrigins(java.util.List.of("http://65.1.223.90"));
+    config.setAllowedMethods(java.util.List.of("GET","POST","PUT","DELETE","OPTIONS"));
+    config.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type"));
+    config.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+}
 
 }

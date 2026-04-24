@@ -11,13 +11,19 @@ import { useLocation } from 'react-router-dom';
 const ProductDashboard = () => {
 const[selectedshop,setSelectedShop]=useState(null);
 const[category,setCategory]=useState(null);
+const [searchTerm, setSearchTerm] = useState("");
 const location=useLocation();
 const {shopId } = location.state || {};
   return (
     <div>
-<Navbar/>
- <Categories setCategory={setCategory}/> 
-  <Pages selectedshop={shopId} category={category}/>
+<Navbar setSearchTerm={setSearchTerm} />
+<Categories setCategory={setCategory}/> 
+
+<Pages 
+  selectedshop={shopId} 
+  category={category}
+  searchTerm={searchTerm}
+/> 
 <Footer/>
 
     </div>

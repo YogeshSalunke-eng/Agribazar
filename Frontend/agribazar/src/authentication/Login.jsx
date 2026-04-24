@@ -17,7 +17,8 @@ email,
 password
 
  } );
- const role=response.data.role;
+   const { token, role } = response.data;
+  localStorage.setItem("token", token);
  if(role==="ROLE_USER"){
 navigate("/userDashboard");
  }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Filters from './Filters';
 import Products from './Products';
 import { useLocation } from "react-router-dom";
-const Pages = ({ selectedshop,category}) => {
+const Pages = ({ selectedshop,category,searchTerm}) => {
   const [crop, setCrop] = useState("all");
   const [brand, setBrand] = useState("all");
   const [pricing, setPricing] = useState("all");
@@ -28,6 +28,7 @@ const Pages = ({ selectedshop,category}) => {
           selectedshop={selectedshop}
           crop={crop}
           brand={brand}
+          searchTerm={searchTerm}
           pricing={pricing}
         />
       </div>

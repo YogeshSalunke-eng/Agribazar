@@ -14,7 +14,7 @@ const[selectedCategory,setSelectedCategory]=useState(null);
   return (
     <div>
 <Navbar/>
-<Shops setShopId={setShopId}/>
+<Shops setShopId={setShopId} selectedCategory={selectedCategory}/>
   <Elements setSelectedCategory={setSelectedCategory} shopId={shopId}/>
 
 

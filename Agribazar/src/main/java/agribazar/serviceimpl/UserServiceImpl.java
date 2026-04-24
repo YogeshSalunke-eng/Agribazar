@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService{
 				.getContext()
 				.getAuthentication()
 				.getName();
-		  System.out.println("SECURITY USERNAME: " + username);
 		       User user= repository.findByEmail(username).orElseThrow(()->
 		        	new RuntimeException("user not found"));
 		        return modelMapper.map(user,UserRequestDTO.class);

@@ -8,14 +8,14 @@ import { Route, Routes } from 'react-router-dom'
 import Pages from './pages/Pages';
 import WishList from './elements/WishList';
 import Cart from './elements/Cart';
-import ProductDetails from './pages/ProductDetails';
+import Productdetails from './pages/Productdetails';
 import CompleteProfile from './authentication/CompleteProfile';
 import UserDashboard from './dashboard/UserDashboard';
 import ProductDashboard from './dashboard/ProductDashboard';
 function App() {
   return (
-    <Routes>
 
+    <Routes>
  <Route path='/' element={<Register/>}/>
 <Route path='/login' element={<Login/>}/>
  <Route path='/forget' element={<ForgetPassword/>}/>
@@ -23,11 +23,10 @@ function App() {
   <Route path='/pages' element={<Pages/>}/>
   <Route path='/wishlist' element={<WishList/>}/>
   <Route path='/cart' element={<Cart/>}/>
-  <Route path='/productdetails' element={<ProductDetails/>}/>
+  <Route path='/productdetails' element={<Productdetails/>}/>
   <Route path='/completeprofile' element={<CompleteProfile/>}/>
   <Route path='productdashboard' element={<ProductDashboard/>}/>
   </Routes>
-
   )
 }
 

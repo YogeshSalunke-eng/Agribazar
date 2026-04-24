@@ -12,4 +12,11 @@ public class WishListItemResponseDTO {
     private String productName;
     private String imageUrl;
     private String price;
+    private String shopName;
+    private String cropname;
+    private String description;
+    private Long wishListId;
+    private Long shopProductId;
 }
+
+

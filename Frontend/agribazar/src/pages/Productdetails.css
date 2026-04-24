@@ -1,9 +1,9 @@
 
-body{
-  background-color: white;
-}
+
 .product-details-container {
-  padding: 20px;
+height: 100vh;
+  background-color: #f5f7fa;
+padding: 20px;
 }
 .shopname{
   display: flex;
@@ -62,7 +62,7 @@ body{
 .add-cart-btn {
   margin-top: 20px;
   padding: 10px 20px;
-  background: green;
+  background:orange;
   color: white;
   border: none;
   cursor: pointer;

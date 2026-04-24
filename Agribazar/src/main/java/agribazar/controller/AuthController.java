@@ -69,12 +69,12 @@ private UserRepository userRepository;
 
 	    LoginResponse res = authService.verify(dto);
 
-	    Cookie cookie = new Cookie("jwt", res.getToken());
-	    cookie.setHttpOnly(true);
-	    cookie.setPath("/");
-	    cookie.setSecure(true);
-	    cookie.setMaxAge(24 * 60 * 60);
-	    response.addCookie(cookie);
+	    // Cookie cookie = new Cookie("jwt", res.getToken());
+	    // cookie.setHttpOnly(true);
+	    // cookie.setPath("/");
+	    // cookie.setSecure(true);
+	    // cookie.setMaxAge(24 * 60 * 60);
+	    // response.addCookie(cookie);
 
 	    return ResponseEntity.ok(res); 
 	}

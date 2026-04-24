@@ -27,5 +27,7 @@ public class UserPrincipal implements org.springframework.security.core.userdeta
 	public String getUsername() {
 		return user.getEmail();
 	}
-
+public Long getId() {
+	return user.getId();
+}
 }

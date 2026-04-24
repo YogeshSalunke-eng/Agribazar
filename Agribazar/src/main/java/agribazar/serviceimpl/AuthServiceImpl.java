@@ -10,7 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import agribazar.dtos.LoginResponse;
 import agribazar.dtos.UserDto;
 import agribazar.exception.ResourceNotFoundException;
+import agribazar.model.Cart;
 import agribazar.model.User;
+import agribazar.model.WishList;
 import agribazar.repository.UserRepository;
 
 @org.springframework.stereotype.Service
@@ -33,25 +35,28 @@ public class AuthServiceImpl implements agribazar.service.AuthService {
 		if (userRepository.existsByEmail(dto.getEmail())) {
 			throw new agribazar.exception.ResourceAlreadyExistException("User already exists");
 		}
-
-		User user = new User();
+		WishList wishList=new WishList();
+       Cart cart=new Cart(); 
+       User user = new User();
 		user.setEmail(dto.getEmail());
 		user.setName(dto.getName());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRole(dto.getRole());
+		user.setCart(cart);
+		user.setWishList(wishList);
+		wishList.setUser(user);
+		cart.setUser(user);
 		return userRepository.save(user);
 	}
 
 	@Override
 	public LoginResponse verify(UserDto dto) {
-
 	    Authentication authentication = authManager.authenticate(
 	            new UsernamePasswordAuthenticationToken(
 	                    dto.getEmail(),
 	                    dto.getPassword()
 	            )
 	    );
-
 	    if (authentication.isAuthenticated()) {
 
 	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();

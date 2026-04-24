@@ -1,10 +1,12 @@
 package agribazar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import agribazar.dtos.CartItemRequestDTO;
 import agribazar.dtos.CartResponseDTO;
+import agribazar.model.UserPrincipal;
 import agribazar.service.CartService;
 
 @RestController
@@ -15,8 +17,10 @@ public class CartController {
     private CartService cartService;
 
     @PostMapping("/add")
-    public String addToCart(@RequestBody CartItemRequestDTO request) {
-        cartService.addToCart(request);
+    public String addToCart(@RequestBody CartItemRequestDTO request,
+    		@AuthenticationPrincipal UserPrincipal userdetails) {
+    	Long userId= userdetails.getId();
+        cartService.addToCart(request,userId);
         return "Product added to cart";
     }
 
@@ -27,8 +31,9 @@ public class CartController {
         return "Product removed from cart";
     }
 
-    @GetMapping("/{cartId}")
-    public CartResponseDTO getCart(@PathVariable Long cartId) {
-        return cartService.getCart(cartId);
+    @GetMapping("/getcart")
+    public CartResponseDTO getCart(@AuthenticationPrincipal UserPrincipal userdetails) {
+    	Long userId=userdetails.getId();
+        return cartService.getCart(userId);
     }
 }

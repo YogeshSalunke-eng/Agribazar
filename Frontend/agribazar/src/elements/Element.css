@@ -163,7 +163,16 @@
 .cart-info h3 {
   margin-bottom: 5px;
 }
-
+.shopandname{
+  display: flex;
+  justify-content: space-between;
+  
+}
+.shopandname p{
+  font-size: 25px;
+  color: green;
+  font-weight: 600;
+}
 .category {
   font-size: 14px;
   color: #888;

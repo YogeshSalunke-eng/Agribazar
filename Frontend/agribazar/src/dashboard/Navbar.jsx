@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { IoLanguage } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({setSearchTerm}) => {
 const{t}=useTranslation();
 const navigate=useNavigate();
 const [showProfile, setShowProfile] = useState(false);
@@ -49,10 +49,11 @@ useEffect(() => {
 
         <div className="navbar-center">
           <input
-            type="text"
-            placeholder="Search products..."
-            className="search-input"
-          />
+  type="text"
+  placeholder="Search products..."
+  className="search-input"
+  onChange={(e) => setSearchTerm(e.target.value)}
+/>
           <button className="search-btn">
             <FaSearch />
           </button>
@@ -78,6 +79,10 @@ useEffect(() => {
             <span>{t("wishlist")}</span>
           </div>
 
+<div className="nav-item" onClick={()=>navigate("/cart")}>
+            <FaShoppingCart />
+            <span>{t("cart")}</span>
+          </div>
           <div className="nav-item">
             <FaUser />
 <div className="login-section">
@@ -113,10 +118,6 @@ useEffect(() => {
 
   </div>
 )}
-          <div className="nav-item" onClick={()=>navigate("/cart")}>
-            <FaShoppingCart />
-            <span>{t("cart")}</span>
-          </div>
         </div>
       </div>
 

@@ -24,15 +24,13 @@ public class WishListServiceImpl implements WishListService {
     private ShopProductsRepository shopProductsRepo;
 
     @Override
-    public void addToWishlist(WishListRequestDTO request) {
-
-        WishList wishlist = wishListRepo.findById(request.getWishlistId())
+    public void addToWishlist(WishListRequestDTO request, Long userId) {
+        WishList wishlist = wishListRepo.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Wishlist not found"));
 
         ShopProducts sp = shopProductsRepo.findById(request.getShopProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        // avoid duplicates
         boolean exists = wishListItemRepo
                 .findByWishlistIdAndShopProductId(request.getWishlistId(), request.getShopProductId())
                 .isPresent();
@@ -41,38 +39,40 @@ public class WishListServiceImpl implements WishListService {
             WishListItem item = new WishListItem();
             item.setWishlist(wishlist);
             item.setShopProduct(sp);
+            wishlist.getItems().add(item);
             wishListItemRepo.save(item);
         }
     }
 
     @Override
     public void removeFromWishlist(Long wishlistId, Long shopProductId) {
-        wishListItemRepo.deleteByWishlistIdAndShopProductId(wishlistId, shopProductId);
+        wishListItemRepo.deleteItem(wishlistId, shopProductId);
     }
 
     @Override
-    public WishListResponseDTO getWishlist(Long wishlistId) {
+    public WishListResponseDTO getWishlist(Long userId) {
 
-        WishList wishlist = wishListRepo.findById(wishlistId)
+        WishList wishlist = wishListRepo.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Wishlist not found"));
 
         List<WishListItemResponseDTO> items = wishlist.getItems().stream().map(w -> {
             WishListItemResponseDTO dto = new WishListItemResponseDTO();
-
             dto.setId(w.getId());
-
             dto.setProductId(w.getShopProduct().getProduct().getId());
             dto.setProductName(w.getShopProduct().getProduct().getName());
             dto.setImageUrl(w.getShopProduct().getProduct().getImageUrl());
             dto.setPrice(w.getShopProduct().getPrice());
-
+            dto.setShopName(w.getShopProduct().getShops().getName());
+            dto.setDescription(w.getShopProduct().getProduct().getDescription());
+            dto.setShopProductId(w.getShopProduct().getId());
+            dto.setWishListId(w.getWishlist().getId());
+            dto.setCropname(w.getShopProduct().getProduct().getCropname());
             return dto;
         }).collect(Collectors.toList());
 
         WishListResponseDTO response = new WishListResponseDTO();
-        response.setWishlistId(wishlistId);
+        response.setWishlistId(wishlist.getId());
         response.setItems(items);
-
         return response;
     }
 }

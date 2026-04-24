@@ -1,5 +1,8 @@
 package agribazar.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToOne;
+
 @lombok.Setter
 @lombok.Getter
 @lombok.AllArgsConstructor
@@ -16,4 +19,8 @@ public class User {
 	@jakarta.persistence.Enumerated(jakarta.persistence.EnumType.STRING)
 	private Role role;
 private String villageName;
+@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+private Cart cart;
+@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+private WishList wishList;
 }

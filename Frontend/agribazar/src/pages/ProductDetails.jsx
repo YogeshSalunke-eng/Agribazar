@@ -1,8 +1,9 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./ProductDetails.css";
-
-const ProductDetails = () => {
+import "./Productdetails.css";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaStore } from "react-icons/fa";
+const Productdetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,12 +24,12 @@ console.log(product);
         ← Back
       </button>
       <div className="shopname">
-     <h1>{productData.shops?.name}</h1>
+     <h1> Product of  {productData.shops?.name}  <FaStore/></h1>
      </div>
       <div className="product-details-card">
         
         <img
-          src={`http://localhost:8080/uploads/${product?.imageUrl}`}
+          src={`https://agribazar-uploads.s3.ap-south-1.amazonaws.com/${product?.imageUrl}`}
           alt={product?.name}
           className="product-details-image"
         />
@@ -46,7 +47,7 @@ console.log(product);
           </p>
         <div className="btn-section">
           <button className="add-cart-btn">
-            Add to Cart
+            Add to Cart<FaShoppingCart/>
           </button>
           <button className=" buy-now-btn">buy now</button>
         </div>
@@ -56,4 +57,4 @@ console.log(product);
   );
 };
 
-export default ProductDetails;
+export default Productdetails;

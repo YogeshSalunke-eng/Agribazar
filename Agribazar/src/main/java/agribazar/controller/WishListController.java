@@ -1,10 +1,12 @@
 package agribazar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import agribazar.dtos.WishListRequestDTO;
 import agribazar.dtos.WishListResponseDTO;
+import agribazar.model.UserPrincipal;
 import agribazar.service.WishListService;
 
 @RestController
@@ -14,14 +16,14 @@ public class WishListController {
     @Autowired
     private WishListService wishListService;
 
-    // ✅ Add item
     @PostMapping("/add")
-    public String addToWishlist(@RequestBody WishListRequestDTO request) {
-        wishListService.addToWishlist(request);
+    public String addToWishlist(@RequestBody WishListRequestDTO request,
+    		@AuthenticationPrincipal UserPrincipal userdetails) {
+Long userId= userdetails.getId();
+        wishListService.addToWishlist(request,userId);
         return "Added to wishlist";
     }
 
-    // ✅ Remove item
     @DeleteMapping("/remove")
     public String removeFromWishlist(@RequestParam Long wishlistId,
                                      @RequestParam Long shopProductId) {
@@ -29,9 +31,9 @@ public class WishListController {
         return "Removed from wishlist";
     }
 
-    // ✅ Get wishlist
-    @GetMapping("/{wishlistId}")
-    public WishListResponseDTO getWishlist(@PathVariable Long wishlistId) {
-        return wishListService.getWishlist(wishlistId);
+    @GetMapping("/get")
+    public WishListResponseDTO getWishlist(@AuthenticationPrincipal UserPrincipal userdetails) {
+    	Long userId=userdetails.getId();
+        return wishListService.getWishlist(userId);
     }
 }
